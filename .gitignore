@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ADR_T.ProductCatalog.Tests/Application/Categories/UpdateCategoryCommandHandlerTests.cs
+/ADR_T.ProductCatalog.Tests/Application/Products/UpdateProductCommandHandlerTests.cs
