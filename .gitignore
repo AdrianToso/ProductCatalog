@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /ADR_T.ProductCatalog.Tests/Application/Categories/UpdateCategoryCommandHandlerTests.cs
 /ADR_T.ProductCatalog.Tests/Application/Products/UpdateProductCommandHandlerTests.cs
+/ADR_T.ProductCatalog.Web
