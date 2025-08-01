@@ -1,0 +1,68 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <span>Listado de Productos</span>
+
+  <span class="spacer"></span>
+  
+  <button 
+    mat-raised-button 
+    color="accent"
+    routerLink="/products/create"
+  >
+    <mat-icon>Agregar</mat-icon> Agregar Producto
+  </button>
+</mat-toolbar>
+
+<div *ngIf="loading" class="loading-spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading" class="product-container">
+  <div class="product-grid">
+    <mat-card *ngFor="let product of products" class="product-card">
+      <mat-card-header>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>{{ getCategoryName(product) }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      <img 
+        mat-card-image 
+        *ngIf="product.imageUrl" 
+        [src]="product.imageUrl" 
+        alt="{{ product.name }}"
+        class="product-image"
+      >
+      
+      <mat-card-content>
+        <p>{{ product.description }}</p>
+      </mat-card-content>
+      
+      <mat-card-actions align="end">
+        <button 
+          mat-button 
+          color="primary"
+          [routerLink]="['/products/edit', product.id]"
+        >
+          <mat-icon>Editar</mat-icon> Editar
+        </button>
+        <button 
+          mat-stroked-button 
+          class="delete-button"
+          (click)="openDeleteDialog(product.id)"
+        >
+          <mat-icon>eliminar</mat-icon> Eliminar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <mat-paginator 
+    [length]="totalCount"
+    [pageSize]="pageSize"
+    [pageIndex]="pageNumber - 1"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+    aria-label="Select page of products"
+  >
+  </mat-paginator>
+</div>
