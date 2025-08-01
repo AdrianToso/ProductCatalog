@@ -2,11 +2,11 @@
 
 ## Descripción del Proyecto
 
-ADR_T.ProductCatalog es una solución de gestión de catálogo de productos que permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre productos y categorías. El proyecto está diseñado como una aplicación Full Stack, separando claramente las responsabilidades del frontend y el backend para garantizar mantenibilidad, escalabilidad y una base de código limpia.
+ADR_T.ProductCatalog realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre productos y categorías. El proyecto está diseñado como una aplicación Full Stack, separando  las responsabilidades del frontend y el backend para garantizar mantenibilidad, escalabilidad y una base de código limpia.
 
 ## Tecnologías
 
-El proyecto se basa en un stack tecnológico moderno y robusto, con las siguientes tecnologías clave:
+El proyecto se basa en un stack tecnológico del ejercicio, con las siguientes tecnologías clave:
 
 ### Backend
 
@@ -28,7 +28,7 @@ El proyecto se basa en un stack tecnológico moderno y robusto, con las siguient
 La solución se divide en dos componentes principales:
 
 * **Backend (`ADR_T.ProductCatalog.API`):** Una API RESTful desarrollada en .NET 8 que expone los endpoints para la gestión de productos y categorías.
-* **Frontend (`ADR_T.ProductCatalog.Web`):** Una aplicación de Angular que consume la API del backend para ofrecer la interfaz de usuario.
+* **Frontend (`product-catalog-ui`):** Una aplicación de Angular que consume la API del backend para ofrecer la interfaz de usuario.
 
 El frontend utiliza una estructura clara y modular, con una separación explícita de responsabilidades:
 -   **`/products/models`:** Contiene las interfaces (DTOs) para los modelos de datos compartidos, garantizando la consistencia de tipos.
@@ -73,4 +73,4 @@ Para levantar y ejecutar el proyecto localmente, sigue estos pasos:
 2.  Instala las dependencias: `npm install`
 3.  Inicia la aplicación: `ng serve --open`
 
-La aplicación de frontend se abrirá en tu navegador por defecto, mostrando la lista de productos que has insertado en la base de datos.
+La aplicación de frontend se abrirá en el navegador por defecto, mostrando la lista de productos insertado en la base de datos.
