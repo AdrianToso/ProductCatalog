@@ -364,3 +364,11 @@ FodyWeavers.xsd
 /ADR_T.ProductCatalog.Tests/Application/Categories/UpdateCategoryCommandHandlerTests.cs
 /ADR_T.ProductCatalog.Tests/Application/Products/UpdateProductCommandHandlerTests.cs
 /ADR_T.ProductCatalog.Web
+
+# Node.js / Angular
+# Agrega los siguientes patrones para el proyecto de Angular
+/product-catalog-ui/node_modules
+/product-catalog-ui/dist
+/product-catalog-ui/npm-debug.log*
+/product-catalog-ui/yarn-error.log*
+/ADR_T.ProductCatalog.Frontend
