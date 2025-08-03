@@ -1,6 +1,9 @@
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
-  <h2>{{ isEditMode ? 'Edit Product' : 'Create New Product' }}</h2>
-  
+  <h2>{{ isEditMode ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+  <div class="form-header">
+    <mat-icon class="form-icon" svgIcon="product"></mat-icon>
+    <span>{{ isEditMode ? 'Editando Producto' : 'Nuevo Producto' }}</span>
+  </div>
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
@@ -10,41 +13,41 @@
   </div>
 
   <mat-form-field appearance="outline">
-    <mat-label>Product Name</mat-label>
+    <mat-label>Nombre del Producto</mat-label>
     <input matInput formControlName="name" required>
     <mat-error *ngIf="productForm.get('name')?.hasError('required')">
-      Name is required
+      El nombre es requerido
     </mat-error>
     <mat-error *ngIf="productForm.get('name')?.hasError('maxlength')">
-      Maximum 200 characters
+      Máximo 200 caracteres
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Description</mat-label>
+    <mat-label>Descripcion</mat-label>
     <textarea matInput formControlName="description" rows="3" required></textarea>
     <mat-error *ngIf="productForm.get('description')?.hasError('required')">
-      Description is required
+      Una descripcion es requerida
     </mat-error>
     <mat-error *ngIf="productForm.get('description')?.hasError('maxlength')">
-      Maximum 500 characters
+      Máximo 500 caracteres
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Category</mat-label>
+    <mat-label>Categoria</mat-label>
     <mat-select formControlName="categoryId" required>
       <mat-option *ngFor="let category of categories" [value]="category.id">
         {{ category.name }}
       </mat-option>
     </mat-select>
     <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">
-      Category is required
+      Categoria es requerida
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Image URL (Optional)</mat-label>
+    <mat-label>Image URL (Opcional)</mat-label>
     <input matInput formControlName="imageUrl">
   </mat-form-field>
 
@@ -54,7 +57,7 @@
       type="button"
       (click)="onCancel()"
     >
-      Cancel
+      Cancelar
     </button>
     
     <button 
@@ -63,7 +66,7 @@
       type="submit"
       [disabled]="productForm.invalid || loading"
     >
-      {{ isEditMode ? 'Update' : 'Create' }} Product
+      {{ isEditMode ? 'Actualizar' : 'Crear' }} Producto
     </button>
   </div>
 </form>
