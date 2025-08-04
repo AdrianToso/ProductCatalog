@@ -69,7 +69,7 @@ Para levantar y ejecutar el proyecto localmente, sigue estos pasos:
 
 ### 3. Configuración del Frontend
 
-1.  Navega a la carpeta del proyecto de Angular: `cd ADR_T.ProductCatalog.Web`
+1.  Navega a la carpeta del proyecto de Angular: `cd product-catalog-ui`
 2.  Instala las dependencias: `npm install`
 3.  Inicia la aplicación: `ng serve --open`
 
