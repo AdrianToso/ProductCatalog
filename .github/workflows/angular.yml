@@ -1,0 +1,34 @@
+name: Angular Build and Lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: |
+        cd ADR_T.ProductCatalog.Frontend
+        npm ci
+
+    - name: Run lint
+      run: |
+        cd ADR_T.ProductCatalog.Frontend
+        npm run lint
+
+    - name: Build
+      run: |
+        cd ADR_T.ProductCatalog.Frontend
+        npm run build -- --configuration production

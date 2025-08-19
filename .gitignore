@@ -370,3 +370,9 @@ FodyWeavers.xsd
 /product-catalog-ui/dist
 /product-catalog-ui/npm-debug.log*
 /product-catalog-ui/yarn-error.log*
+ADR_T.ProductCatalog.Frontend/.angular/
+ADR_T.ProductCatalog.Frontend/cache/
+ADR_T.ProductCatalog.Frontend/dist/
+ADR_T.ProductCatalog.Frontend/node_modules/
+ADR_T.ProductCatalog.Frontend/npm-debug.log*
+ADR_T.ProductCatalog.Frontend/yarn-error.log*
