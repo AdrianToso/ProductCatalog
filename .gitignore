@@ -376,3 +376,14 @@ ADR_T.ProductCatalog.Frontend/dist/
 ADR_T.ProductCatalog.Frontend/node_modules/
 ADR_T.ProductCatalog.Frontend/npm-debug.log*
 ADR_T.ProductCatalog.Frontend/yarn-error.log*
+
+
+# Ignorar archivos de imagen de prueba
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.webp
+# También ignorar archivos temporales de imagen
+*.temp.*
