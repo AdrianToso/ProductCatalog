@@ -29,7 +29,14 @@ public static class DependencyInjection
         services.AddScoped<DataSeeder>();
 
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(
+            configuration.GetConnectionString("DefaultConnection"),
+            sqlOptions => sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(10),
+                errorNumbersToAdd: null
+            )
+         ));
 
         services.AddIdentityCore<ApplicationUser>()
                 .AddRoles<IdentityRole>()

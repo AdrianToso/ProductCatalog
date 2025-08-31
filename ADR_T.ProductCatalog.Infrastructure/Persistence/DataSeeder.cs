@@ -1,5 +1,6 @@
 ﻿using ADR_T.ProductCatalog.Core.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ADR_T.ProductCatalog.Infrastructure.Persistence;
@@ -27,7 +28,7 @@ public class DataSeeder
     {
         try
         {
-            await _context.Database.EnsureCreatedAsync();
+            await _context.Database.MigrateAsync();
 
             await SeedRolesAsync();
             await SeedUsersAsync();
