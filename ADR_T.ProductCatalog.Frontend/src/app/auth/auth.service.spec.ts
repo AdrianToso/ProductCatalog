@@ -13,7 +13,7 @@ describe('AuthService', () => {
   const fakeJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiRWRpdG9yIiwgIlVzZXIiLCAiQWRtaW4iXSwiZXhwIjoxNzM1Njg5NjYxLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTc1IiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDIwMCJ9.fakeSignature';
 
   beforeAll(() => {
-    // Polyfill para atob en el entorno de prueba de Node.js (Karma)
+    // Polyfill para atob en el entorno de prueba de Node.js (usado por Jest)
     if (typeof window.atob === 'undefined') {
       window.atob = (str: string) => Buffer.from(str, 'base64').toString('binary');
     }

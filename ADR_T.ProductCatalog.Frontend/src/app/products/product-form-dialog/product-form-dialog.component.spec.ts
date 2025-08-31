@@ -11,17 +11,22 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 describe('ProductFormDialogComponent', () => {
   let component: ProductFormDialogComponent;
   let fixture: ComponentFixture<ProductFormDialogComponent>;
-  let mockProductService: jasmine.SpyObj<ProductService>;
-  let mockCategoryService: jasmine.SpyObj<CategoryService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<ProductFormDialogComponent>>;
+  let mockProductService: ProductService;
+  let mockCategoryService: CategoryService;
+  let mockDialogRef: MatDialogRef<ProductFormDialogComponent>;
 
   beforeEach(async () => {
-    mockProductService = jasmine.createSpyObj('ProductService', ['createProduct', 'updateProduct']);
-    mockCategoryService = jasmine.createSpyObj('CategoryService', ['getAllCategories']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
-
-    // Configurar el mock para que devuelva un observable vacío
-    mockCategoryService.getAllCategories.and.returnValue(of([]));
+    // Se crean los mocks de los servicios usando objetos y jest.fn()
+    const productServiceMock = {
+      createProduct: jest.fn(),
+      updateProduct: jest.fn()
+    };
+    const categoryServiceMock = {
+      getAllCategories: jest.fn().mockReturnValue(of([])) // Se configura el mock directamente
+    };
+    const dialogRefMock = {
+      close: jest.fn()
+    };
 
     await TestBed.configureTestingModule({
       imports: [
@@ -31,15 +36,16 @@ describe('ProductFormDialogComponent', () => {
       ],
       declarations: [ProductFormDialogComponent],
       providers: [
-        { provide: ProductService, useValue: mockProductService },
-        { provide: CategoryService, useValue: mockCategoryService },
-        { provide: MatDialogRef, useValue: mockDialogRef },
+        { provide: ProductService, useValue: productServiceMock },
+        { provide: CategoryService, useValue: categoryServiceMock },
+        { provide: MatDialogRef, useValue: dialogRefMock },
         { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductFormDialogComponent);
     component = fixture.componentInstance;
+    mockCategoryService = TestBed.inject(CategoryService); // Se inyecta el mock para verificarlo
     fixture.detectChanges();
   });
 

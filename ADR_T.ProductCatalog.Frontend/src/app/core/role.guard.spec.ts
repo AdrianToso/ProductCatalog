@@ -1,53 +1,62 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { RoleGuard } from './role.guard';
 import { AuthService } from '../auth/auth.service';
 
 describe('RoleGuard', () => {
   let guard: RoleGuard;
-  let authService: jasmine.SpyObj<AuthService>;
-  let router: jasmine.SpyObj<Router>;
+  let authService: AuthService;
+  let router: Router;
 
   beforeEach(() => {
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['getRoles']);
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    // Se crean los mocks de los servicios usando la sintaxis de Jest
+    const authServiceMock = {
+      getRoles: jest.fn()
+    };
+    const routerMock = {
+      navigate: jest.fn()
+    };
 
     TestBed.configureTestingModule({
       providers: [
         RoleGuard,
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Router, useValue: routerMock }
       ]
     });
 
     guard = TestBed.inject(RoleGuard);
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    authService = TestBed.inject(AuthService);
+    router = TestBed.inject(Router);
   });
 
   it('should allow access for Admin role', () => {
-    authService.getRoles.and.returnValue(['Admin']);
+    // Se configura el mock para que devuelva un valor específico
+    (authService.getRoles as jest.Mock).mockReturnValue(['Admin']);
+    
     const route = { data: { expectedRoles: ['Admin', 'Editor'] } } as unknown as ActivatedRouteSnapshot;
     const state = {} as RouterStateSnapshot;
 
-    expect(guard.canActivate(route, state)).toBeTrue();
+    // Se usan los matchers de Jest
+    expect(guard.canActivate(route, state)).toBe(true);
   });
 
   it('should allow access for Editor role', () => {
-    authService.getRoles.and.returnValue(['Editor']);
+    (authService.getRoles as jest.Mock).mockReturnValue(['Editor']);
+    
     const route = { data: { expectedRoles: ['Admin', 'Editor'] } } as unknown as ActivatedRouteSnapshot;
     const state = {} as RouterStateSnapshot;
 
-    expect(guard.canActivate(route, state)).toBeTrue();
+    expect(guard.canActivate(route, state)).toBe(true);
   });
 
   it('should deny access for User role', () => {
-    authService.getRoles.and.returnValue(['User']);
+    (authService.getRoles as jest.Mock).mockReturnValue(['User']);
+    
     const route = { data: { expectedRoles: ['Admin', 'Editor'] } } as unknown as ActivatedRouteSnapshot;
     const state = {} as RouterStateSnapshot;
 
-    expect(guard.canActivate(route, state)).toBeFalse();
+    expect(guard.canActivate(route, state)).toBe(false);
     expect(router.navigate).toHaveBeenCalledWith(['/home']);
   });
 });
