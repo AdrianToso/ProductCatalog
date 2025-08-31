@@ -28,3 +28,87 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+
+.git
+.gitignore
+node_modules
+dist
+coverage
+.angular
+.husky
+.vscode
+Dockerfile*
+docker-compose*
+README.md
+
+.dockerignore
+Ignorar directorios de compilación de .NET
+**/bin
+**/obj
+
+Ignorar directorios de frontend
+**/node_modules
+**/dist
+**/coverage
+**/.angular
+**/cache
+
+Ignorar archivos y carpetas de Git
+.git
+.gitignore
+
+Ignorar archivos y carpetas de IDEs
+.vscode
+.vs
+
+Ignorar archivos de Docker para que no se copien a sí mismos
+Dockerfile*
+docker-compose*
+.dockerignore
+
+Otros
+README.md
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose.yml
+.dockerignore
+
+# Build artifacts
+*/bin/
+*/obj/
+
+# Node
+*/node_modules/
+ADR_T.ProductCatalog.Frontend/coverage/
+ADR_T.ProductCatalog.Frontend/dist/
+npm-debug.log
+
+# VS
+.vs/
+*.user
+*.suo
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose.yml
+.dockerignore
+
+# Node
+*/node_modules/
+ADR_T.ProductCatalog.Frontend/coverage/
+ADR_T.ProductCatalog.Frontend/dist/
+npm-debug.log
+
+# VS
+.vs/
+*.user
+*.suo

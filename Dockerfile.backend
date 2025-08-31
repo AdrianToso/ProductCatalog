@@ -1,0 +1,32 @@
+# Stage 1: Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /source
+
+# Copiar solo los archivos de proyecto necesarios para la WebApi y sus dependencias
+COPY ADR_T.ProductCatalog.Core/*.csproj ./ADR_T.ProductCatalog.Core/
+COPY ADR_T.ProductCatalog.Application/*.csproj ./ADR_T.ProductCatalog.Application/
+COPY ADR_T.ProductCatalog.Infrastructure/*.csproj ./ADR_T.ProductCatalog.Infrastructure/
+COPY ADR_T.ProductCatalog.WebApi/*.csproj ./ADR_T.ProductCatalog.WebApi/
+
+# Restaurar dependencias enfocándose solo en el proyecto WebApi
+RUN dotnet restore ./ADR_T.ProductCatalog.WebApi/ADR_T.ProductCatalog.WebApi.csproj
+
+# Copiar todo el código fuente (excepto lo ignorado por .dockerignore)
+COPY . .
+
+# Publicar enfocándose solo en el proyecto WebApi, deshabilitando SourceLink
+RUN dotnet publish ./ADR_T.ProductCatalog.WebApi/ADR_T.ProductCatalog.WebApi.csproj \
+    -c Release \
+    -o /app/publish \
+    -p:EnableSourceLink=false \
+    -p:EnableSourceControlManagerQueries=false
+
+# Stage 2: Final Image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/publish .
+
+# Exponer el puerto HTTP
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "ADR_T.ProductCatalog.WebApi.dll"]

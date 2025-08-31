@@ -12,8 +12,14 @@ import { Category } from '../models/category.model';
 describe('ProductFormComponent', () => {
   let component: ProductFormComponent;
   let fixture: ComponentFixture<ProductFormComponent>;
-  let mockProductService: jasmine.SpyObj<ProductService>;
-  let mockCategoryService: jasmine.SpyObj<CategoryService>;
+  let mockProductService: {
+    getProductById: jest.Mock,
+    createProduct: jest.Mock,
+    updateProduct: jest.Mock,
+    createProductWithImage: jest.Mock,
+    updateProductImage: jest.Mock
+  };
+  let mockCategoryService: { getAllCategories: jest.Mock };
 
   const mockCategory: Category = {
     id: '1',
@@ -22,15 +28,17 @@ describe('ProductFormComponent', () => {
   };
 
   beforeEach(async () => {
-    mockProductService = jasmine.createSpyObj('ProductService', [
-      'getProductById', 
-      'createProduct', 
-      'updateProduct',
-      'createProductWithImage',
-      'updateProductImage'
-    ]);
+    mockProductService = {
+      getProductById: jest.fn(),
+      createProduct: jest.fn(),
+      updateProduct: jest.fn(),
+      createProductWithImage: jest.fn(),
+      updateProductImage: jest.fn()
+    };
 
-    mockCategoryService = jasmine.createSpyObj('CategoryService', ['getAllCategories']);
+    mockCategoryService = {
+      getAllCategories: jest.fn()
+    };
 
     await TestBed.configureTestingModule({
       declarations: [ProductFormComponent],
@@ -54,9 +62,8 @@ describe('ProductFormComponent', () => {
   });
 
   it('should load categories on init', () => {
-    mockCategoryService.getAllCategories.and.returnValue(of([mockCategory]));
+    mockCategoryService.getAllCategories.mockReturnValue(of([mockCategory]));
     fixture.detectChanges();
-    
     expect(mockCategoryService.getAllCategories).toHaveBeenCalled();
   });
 
@@ -65,27 +72,27 @@ describe('ProductFormComponent', () => {
     const input = document.createElement('input');
     input.type = 'file';
     Object.defineProperty(input, 'files', {
-        value: [file]
+      value: [file]
     });
     const event = { target: input } as unknown as Event;
-    
+
     component.onFileSelected(event);
-    
+
     expect(component.selectedFile).toBe(file);
     expect(component.errorMessage).toBe('');
-});
+  });
 
   it('should show error for non-image file', () => {
     const file = new File([''], 'test.txt', { type: 'text/plain' });
     const input = document.createElement('input');
     input.type = 'file';
     Object.defineProperty(input, 'files', {
-        value: [file]
+      value: [file]
     });
     const event = { target: input } as unknown as Event;
 
     component.onFileSelected(event);
-    
+
     expect(component.selectedFile).toBeNull();
     expect(component.errorMessage).toContain('Solo se permiten archivos de imagen');
   });
