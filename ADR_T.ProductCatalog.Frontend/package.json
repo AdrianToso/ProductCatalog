@@ -8,8 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "lint": "ng lint",
-    "test:coverage": "jest --watch=false --coverage && start ./coverage/adr-t.product-catalog.frontend/index.html",
-    "preinstall": "npx npm-force-resolutions"
+    "test:coverage": "jest --watch=false --coverage && start ./coverage/adr-t.product-catalog.frontend/index.html"
   },
   "private": true,
   "dependencies": {
