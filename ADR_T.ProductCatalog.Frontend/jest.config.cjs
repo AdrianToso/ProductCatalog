@@ -6,7 +6,7 @@ module.exports = {
     '<rootDir>/dist/',
     '<rootDir>/cypress/'
   ],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1'
   },
   transform: {
