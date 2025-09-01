@@ -2,10 +2,20 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "types": ["jest", "node"]
+    "module": "esnext",
+    "types": ["jest", "node"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "setup-jest.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "src/**/*.mock.ts",
+    "src/**/*.stories.ts"
   ]
 }

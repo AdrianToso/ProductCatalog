@@ -11,7 +11,7 @@ class MockAuthService {
 }
 
 class MockRouter {
-  navigate = jasmine.createSpy('navigate');
+  navigate = jest.fn();
 }
 
 describe('AuthInterceptor', () => {
@@ -44,7 +44,7 @@ describe('AuthInterceptor', () => {
     httpClient.get('/test').subscribe();
 
     const httpRequest = httpMock.expectOne('/test');
-    expect(httpRequest.request.headers.has('Authorization')).toBeTruthy();
+    expect(httpRequest.request.headers.has('Authorization')).toBe(true);
     expect(httpRequest.request.headers.get('Authorization')).toBe('Bearer test-token');
   });
 });
