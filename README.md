@@ -150,5 +150,5 @@ La base de datos se inicializa con los siguientes usuarios para que puedas proba
 
 Para un análisis más profundo de la arquitectura, patrones y decisiones de diseño, consulta los siguientes documentos:
 
-* [**Análisis Arquitectónico del Backend**](Frontend_Angular.md)  
-* [**Análisis Arquitectónico del Frontend**](Backend_NET.md.md)
+* [**Análisis Backend**](Frontend_Angular.md)  
+* [**Análisis Frontend**](Backend_NET.md)
