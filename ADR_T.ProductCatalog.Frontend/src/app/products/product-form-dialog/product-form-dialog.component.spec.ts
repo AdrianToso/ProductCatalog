@@ -11,9 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 describe('ProductFormDialogComponent', () => {
   let component: ProductFormDialogComponent;
   let fixture: ComponentFixture<ProductFormDialogComponent>;
-  let mockProductService: ProductService;
   let mockCategoryService: CategoryService;
-  let mockDialogRef: MatDialogRef<ProductFormDialogComponent>;
 
   beforeEach(async () => {
     // Se crean los mocks de los servicios usando objetos y jest.fn()
