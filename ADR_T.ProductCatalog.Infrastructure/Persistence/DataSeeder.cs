@@ -28,7 +28,6 @@ public class DataSeeder
     {
         try
         {
-            await _context.Database.MigrateAsync();
 
             await SeedRolesAsync();
             await SeedUsersAsync();

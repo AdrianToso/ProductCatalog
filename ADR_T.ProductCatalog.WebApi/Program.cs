@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuraci髇 de Serilog
+// Configuraci贸n de Serilog
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
@@ -22,13 +23,13 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
-// Configurar l韒ites de Kestrel
+// Configurar l铆mites de Kestrel
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.Limits.MaxRequestBodySize = 52428800; // 50 MB
 });
 
-// Configurar l韒ites de formularios
+// Configurar l铆mites de formularios
 builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 52428800; // 50 MB
@@ -50,10 +51,10 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "Product Catalog API",
         Version = "v1",
-        Description = "API para gesti髇 de productos y categor韆s",
+        Description = "API para gesti贸n de productos y categor铆as",
         Contact = new OpenApiContact
         {
-            Name = "Adri醤 Toso",
+            Name = "Adri谩n Toso",
             Url = new Uri("https://www.linkedin.com/in/adrian-toso-24b96419/")
         }
     });
@@ -107,15 +108,28 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Siembra de datos inicial
+// --- L脫GICA DE MIGRACI脫N Y SIEMBRA CORREGIDA ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogInformation("Iniciando siembra de datos...");
-    var seeder = services.GetRequiredService<DataSeeder>();
-    await seeder.SeedAsync();
-    logger.LogInformation("Siembra de datos finalizada.");
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        
+        logger.LogInformation("Aplicando migraciones de la base de datos...");
+        await context.Database.MigrateAsync();
+        logger.LogInformation("Migraciones aplicadas correctamente.");
+
+        logger.LogInformation("Iniciando siembra de datos...");
+        var seeder = services.GetRequiredService<DataSeeder>();
+        await seeder.SeedAsync();
+        logger.LogInformation("Siembra de datos finalizada.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Ocurri贸 un error durante la migraci贸n o siembra inicial de la base de datos.");
+    }
 }
 
 // Middlewares
@@ -144,3 +158,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
