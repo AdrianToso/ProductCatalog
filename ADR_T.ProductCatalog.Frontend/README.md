@@ -1,59 +1,68 @@
-# ADRTProductCatalogFrontend
+# **Catálogo de Productos \- Frontend (ADR\_T.ProductCatalog.Frontend)**
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+Este proyecto es la interfaz de usuario (UI) para la aplicación de Catálogo de Productos, desarrollada como una Aplicación de Página Única (SPA) utilizando Angular.
 
-## Development server
+## **Tecnologías y Librerías Principales**
 
-To start a local development server, run:
+* **Angular (\~v20):** Framework principal para el desarrollo de la aplicación.  
+* **TypeScript:** Lenguaje de programación principal.  
+* **RxJS:** Para la gestión de operaciones asíncronas y programación reactiva.  
+* **Angular Material:** Biblioteca de componentes de UI para un diseño consistente y profesional.  
+* **SCSS:** Preprocesador de CSS para estilos avanzados y mantenibles.  
+* **Angular CLI:** Para la gestión, construcción y testing del proyecto.
 
-```bash
-ng serve
-```
+## **Arquitectura y Estructura del Proyecto**
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+La aplicación sigue las mejores prácticas de Angular, con una estructura modular y organizada para facilitar la escalabilidad y el mantenimiento.
 
-## Code scaffolding
+* src/app/core: Contiene la lógica central y los servicios singleton, como los interceptores HTTP (AuthInterceptor, LoadingInterceptor) y el manejo de estado global (ProductsStateService).  
+* src/app/shared: Módulos, componentes y pipes reutilizables en toda la aplicación, como el MaterialModule.  
+* src/app/layout: Define la estructura visual principal de la aplicación (el *shell*) con la navegación y el router-outlet.  
+* src/app/products: Módulo de funcionalidad (feature module) que encapsula todo lo relacionado con la gestión de productos (listado, formularios, modelos de datos y servicios).  
+* src/app/auth: Módulo de funcionalidad dedicado a la autenticación de usuarios.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## **Puesta en Marcha**
 
-```bash
-ng generate component component-name
-```
+Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno de desarrollo local.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### **1\. Prerrequisitos**
 
-```bash
-ng generate --help
-```
+* **Node.js:** Se recomienda la versión LTS. Puedes verificar tu versión con node \-v.  
+* **Angular CLI:** Si no lo tienes, instálalo globalmente con npm install \-g @angular/cli.  
+* **Backend en ejecución:** Asegúrate de que el proyecto backend (ADR\_T.ProductCatalog.WebApi) esté en ejecución, ya que esta aplicación necesita consumir su API. Por defecto, la API se espera en https://localhost:7175.
 
-## Building
+### **2\. Configuración del Entorno**
 
-To build the project run:
+El archivo de configuración de entorno se encuentra en src/environments/environment.ts. La propiedad apiUrl debe apuntar a la URL base de tu API de backend.
 
-```bash
-ng build
-```
+// src/environments/environment.ts  
+export const environment \= {  
+  production: false,  
+  apiUrl: '/api/' // Proxy configurado o URL completa como 'https://localhost:7175/api/'  
+};
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+*Nota: El proyecto está configurado para usar un proxy (proxy.conf.json) que redirige las peticiones de /api al backend, simplificando la configuración durante el desarrollo.*
 
-## Running unit tests
+### **3\. Instalación y Ejecución**
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. Instalar dependencias:  
+   Navega a la raíz de este proyecto (ADR\_T.ProductCatalog.Frontend) en tu terminal y ejecuta:  
+   npm install
 
-```bash
-ng test
-```
+2. Iniciar el servidor de desarrollo:  
+   Una vez instaladas las dependencias, ejecuta:  
+   ng serve \-o
 
-## Running end-to-end tests
+   o  
+   npm start
 
-For end-to-end (e2e) testing, run:
+   Este comando compilará la aplicación, iniciará un servidor de desarrollo y abrirá automáticamente tu navegador en http://localhost:4200/.
 
-```bash
-ng e2e
-```
+## **Scripts Disponibles**
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Desde la carpeta raíz del proyecto, puedes ejecutar los siguientes scripts:
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* npm start: Inicia el servidor de desarrollo.  
+* npm run build: Compila la aplicación para producción en la carpeta dist/.  
+* npm test: Ejecuta las pruebas unitarias con Jest.  
+* npm run lint: Analiza el código fuente en busca de errores de estilo con ESLint.
